@@ -7,10 +7,8 @@ tests the stubs with [mypy](https://github.com/python/mypy/)
 [pyright](https://github.com/microsoft/pyright).
 - `tests/regr_test.py` runs mypy against the test cases for typeshed's
 stubs, guarding against accidental regressions.
-- `tests/check_consistent.py` checks that typeshed's directory
+- `tests/check_typeshed_structure.py` checks that typeshed's directory
 structure and metadata files are correct.
-- `tests/check_new_syntax.py` contains linter-like checks to ensure
-that certain code conventions are followed.
 - `tests/stubtest_stdlib.py` checks standard library stubs against the
 objects at runtime.
 - `tests/stubtest_third_party.py` checks third-party stubs against the
@@ -38,7 +36,7 @@ You can list or install all of a stubs package's external dependencies using the
 
 Run using:
 ```bash
-(.venv3)$ python3 scripts/runtests.py <stdlib-or-stubs>/<stub-to-test>
+(.venv3)$ python3 tests/runtests.py <stdlib-or-stubs>/<stub-to-test>
 ```
 
 This script will run all tests below for a specific typeshed directory. If a
@@ -48,7 +46,7 @@ be selected. A summary of the results will be printed to the terminal.
 You must provide a single argument which is a path to the stubs to test, like
 so: `stdlib/os` or `stubs/requests`.
 
-Run `python scripts/runtests.py --help` for information on the various configuration options
+Run `python tests/runtests.py --help` for information on the various configuration options
 for this script. Note that if you use the `--run-stubtest` flag with the stdlib stubs,
 whether or not the test passes will depend on the exact version of Python
 you're using, as well as various other details regarding your local environment.
@@ -109,11 +107,13 @@ for more information about what
 these test cases are for and how they work. Run `python tests/regr_test.py --help`
 for information on the various configuration options.
 
-## check\_consistent.py
+## check\_typeshed\_structure.py
+
+This checks that typeshed's directory structure and metadata files are correct.
 
 Run using:
 ```bash
-$ python3 tests/check_consistent.py
+$ python3 tests/check_typeshed_structure.py
 ```
 
 ## stubtest\_stdlib.py
@@ -186,7 +186,7 @@ but missing from the stub. However, this behaviour can be disabled using the
 
 If a distribution has `ignore_missing_stub = true` in the `[tool.stubtest]` section of its
 `tests/METADATA.toml` file, `stubtest_third_party.py` will test that distribution with the
-`--ignore-missing-stub option`. This indicates that the stubs for this distribution are
+`--ignore-missing-stub` option. This indicates that the stubs for this distribution are
 considered "incomplete".
 
 You can help make typeshed's stubs more complete by removing
